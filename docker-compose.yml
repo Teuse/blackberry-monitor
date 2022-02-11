@@ -1,0 +1,78 @@
+version: '3.9'
+
+services:
+
+  influxdb:
+    image: influxdb:latest
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./data/influxdb/data:/var/lib/influxdb2
+      - ./data/influxdb/config:/etc/influxdb2
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_USERNAME}
+      DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_PASSWORD}
+      DOCKER_INFLUXDB_INIT_ORG: "org0"
+      DOCKER_INFLUXDB_INIT_BUCKET: "bucket0"
+      DOCKER_INFLUXDB_INIT_RETENTION: 100w
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_TOKEN}
+
+  kapacitor:
+    image: kapacitor:latest
+    volumes:
+      - ./etc/kapacitor.conf:/etc/kapacitor/kapacitor.conf:ro
+      # - ./kapacitor/data:/var/lib/kapacitor
+    environment:
+      - KAPACITOR_HOSTNAME=kapacitor
+      - KAPACITOR_INFLUXDB_0_URLS_0=http://influxdb:8086
+    links:
+      - influxdb
+    ports:
+      - "9092:9092"
+
+  telegraf:
+    image: telegraf:latest
+    volumes:
+      - ./etc/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ./etc/rpi-stats.sh:/etc/telegraf/rpi-stats.sh:ro
+    links:
+      - influxdb
+    ports:
+      - "8092:8092/udp"
+      - "8094:8094"
+      - "8125:8125/udp"
+
+  chronograf:
+    image: chronograf:latest
+    volumes:
+      - ./data/chronograf:/var/lib/chronograf
+    environment:
+      INFLUXDB_URL: http://influxdb:8086
+      KAPACITOR_URL: http://kapacitor:9092
+      INFLUXDB_USERNAME: ${INFLUXDB_USERNAME}
+      INFLUXDB_PASSWORD: ${INFLUXDB_PASSWORD}
+      INFLUXDB_ORG: "org0"
+      InfluxDB_TOKEN: ${INFLUXDB_TOKEN}
+    ports:
+      - "8888:8888"
+    links:
+      - influxdb
+      - kapacitor
+
+  influxdb-cli:
+    image: influxdb:latest
+    entrypoint:
+      - influx
+      - -host
+      - influxdb
+    links:
+      - influxdb
+
+  kapacitor-cli:
+    image: kapacitor:latest
+    entrypoint: bash
+    environment:
+      KAPACITOR_URL: http://kapacitor:9092
+    links:
+      - kapacitor
