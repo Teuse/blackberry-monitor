@@ -7,8 +7,8 @@ services:
     ports:
       - "8086:8086"
     volumes:
-      - .data/influxdb/data:/var/lib/influxdb2
-      - .data/influxdb/config:/etc/influxdb2
+      - ./data/influxdb/data:/var/lib/influxdb2
+      - ./data/influxdb/config:/etc/influxdb2
     environment:
       DOCKER_INFLUXDB_INIT_MODE: setup
       DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_USERNAME}
@@ -43,12 +43,12 @@ services:
     depends_on:
       - influxdb
     volumes:
-      - grafana-storage:/var/lib/grafana
+      - ./data/grafana:/var/lib/grafana
       - ./etc/grafana-provisioning/:/etc/grafana/provisioning
     environment:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
 
-volumes:
-  influxdb-storage:
-  grafana-storage:
+# volumes:
+#   influxdb-storage:
+#   grafana-storage:
