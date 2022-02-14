@@ -19,8 +19,9 @@ services:
       DOCKER_INFLUXDB_INIT_RETENTION: 100w
       INFLUXDB_RETENTION_ENABLED: false
 
-  telegraf:
-    image: telegraf:latest
+  telegraf_with_python:
+    build: ./telegraf_with_python/
+    container_name: telegraf
     ports:
       - "8092:8092/udp"
       - "8094:8094"
@@ -29,12 +30,20 @@ services:
       - influxdb
     volumes:
       - ./etc/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-      - ./metrics:/etc/telegraf/metrics:ro
+      # - /:/host:ro
+      - ./bicycle:/etc/telegraf/bicycle:ro
     environment:
       INFLUXDB_URL: http://influxdb:8086
       INFLUXDB_TOKEN: ${INFLUXDB_TOKEN}
       INFLUXDB_ORG: ${INFLUXDB_ORG}
       INFLUXDB_BUCKET: ${INFLUXDB_BUCKET}
+      # HOST_PROC: /host/proc
+      # HOST_MOUNT: /host
+      # HOST_ETC: /hostfs/etc
+      # HOST_SYS: /hostfs/sys
+      # HOST_VAR: /hostfs/var
+      # HOST_RUN: /hostfs/run
+      # HOST_MOUNT_PREFIX: /hostfs
 
   grafana:
     image: grafana/grafana:latest
@@ -49,6 +58,3 @@ services:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
 
-# volumes:
-#   influxdb-storage:
-#   grafana-storage:
