@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 
 import os
-from dotenv import load_dotenv
 from strava_client import StravaClient
 from strava_stats import Stats
 
-load_dotenv()
 client_id = os.environ['STRAVA_CLIENT_ID']
 client_secret = os.environ['STRAVA_CLIENT_SECRET']
 refresh_token = os.environ['STRAVA_REFRESH_TOKEN']

@@ -3,17 +3,24 @@
 Home Dashboard creates, as the name already says, a dashboard for my living room. It'll show e.g.
 * Air Quality (meassured by the BME680 chip from Bosch)
 * Cycling statistics (received from Strava)
+* Weather forcast
 * ...
+
+This project is based on the TIG-Stack (Telegraf, InfluxDB and Grafana). Internet speed and Air Quality is measured on a rasperry pi collected by telegraf and stored the influxDB. All other data is collected by grafana datasoruces.
 
 ## Requirements
 
 To build the project, i assume you have the following tools installed:
-* Docker
-* 
+* docker
+* docker-compose
+
+Hardware
+* Raspberry Pi 
+* Bosch BME680
 
 ## Required Environment Variables
 
-You need to create two `.env`. At first create a `.env` file in the project root dir with the following content
+You need to create a `.env` in your project root dir. 
 ```
 INFLUXDB_USERNAME=<username-for-influxdb>
 INFLUXDB_PASSWORD=<password-for-influxdb
@@ -23,15 +30,12 @@ INFLUXDB_BUCKET=<default-bucket-name>
 
 GRAFANA_USERNAME=<username-for-grafana>
 GRAFANA_PASSWORD=<password-for-grafana>
-```
 
-Next, you need the file `./bicycle/.env` with the following content:
-> Note: More information about the reqired Strava ID, Secret and Token can be found here: https://developers.strava.com/
-```
 STRAVA_CLIENT_ID=<strava-client-id>
 STRAVA_CLIENT_SECRET=<strava-client-secret>
 STRAVA_REFRESH_TOKEN=<strava-refresh-token>
 ```
+> Note: More information about the reqired Strava ID, Secret and Token can be found here: https://developers.strava.com/
 
 ## Build and Run
 

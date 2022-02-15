@@ -11,3 +11,16 @@ datasources:
       defaultBucket: bucket0
       tlsSkipVerify: true
 
+  - name: Strava
+    type: grafana-strava-datasource
+    access: proxy
+    secureJsonData:
+      clientSecret: ${STRAVA_CLIENT_SECRET}
+      refreshToken: ${STRAVA_REFRESH_TOKEN}
+    jsonData:
+      clientID: ${STRAVA_CLIENT_ID}
+      stravaAuthType: refresh_token
+
+  - name: Infinity
+    type: yesoreyeram-infinity-datasource
+    access: proxy
