@@ -3,20 +3,23 @@
 Home Dashboard creates, as the name already says, a dashboard for my living room. It'll show e.g.
 * Air Quality (meassured by the BME680 chip from Bosch)
 * Cycling statistics (received from Strava)
-* Weather forcast
+* Internet Speed
 * ...
 
 This project is based on the TIG-Stack (Telegraf, InfluxDB and Grafana). Internet speed and Air Quality is measured on a rasperry pi collected by telegraf and stored the influxDB. All other data is collected by grafana datasoruces.
 
 ## Requirements
 
-To build the project, i assume you have the following tools installed:
+Software
 * docker
 * docker-compose
 
 Hardware
 * Raspberry Pi 
 * Bosch BME680
+
+Services
+* Strava
 
 ## Required Environment Variables
 

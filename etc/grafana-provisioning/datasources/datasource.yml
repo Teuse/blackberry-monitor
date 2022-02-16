@@ -20,7 +20,3 @@ datasources:
     jsonData:
       clientID: ${STRAVA_CLIENT_ID}
       stravaAuthType: refresh_token
-
-  - name: Infinity
-    type: yesoreyeram-infinity-datasource
-    access: proxy

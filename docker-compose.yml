@@ -4,6 +4,7 @@ services:
 
   influxdb:
     image: influxdb:latest
+    container_name: rpi-influxdb
     ports:
       - "8086:8086"
     volumes:
@@ -21,7 +22,7 @@ services:
 
   telegraf_with_python:
     build: ./telegraf_with_python/
-    container_name: telegraf
+    container_name: rpi-telegraf
     ports:
       - "8092:8092/udp"
       - "8094:8094"
@@ -30,26 +31,23 @@ services:
       - influxdb
     volumes:
       - ./etc/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-      # - /:/host:ro
-      - ./bicycle:/etc/telegraf/bicycle:ro
+      - /:/hostfs:ro
+      - ./air_quality:/etc/scripts/air_quality:ro
     environment:
       INFLUXDB_URL: http://influxdb:8086
       INFLUXDB_TOKEN: ${INFLUXDB_TOKEN}
       INFLUXDB_ORG: ${INFLUXDB_ORG}
       INFLUXDB_BUCKET: ${INFLUXDB_BUCKET}
-      STRAVA_CLIENT_ID: ${STRAVA_CLIENT_ID}
-      STRAVA_CLIENT_SECRET: ${STRAVA_CLIENT_SECRET}
-      STRAVA_REFRESH_TOKEN: ${STRAVA_REFRESH_TOKEN}
-      # HOST_PROC: /host/proc
-      # HOST_MOUNT: /host
-      # HOST_ETC: /hostfs/etc
-      # HOST_SYS: /hostfs/sys
-      # HOST_VAR: /hostfs/var
-      # HOST_RUN: /hostfs/run
-      # HOST_MOUNT_PREFIX: /hostfs
+      HOST_ETC: /hostfs/etc
+      HOST_PROC: /hostfs/proc
+      HOST_SYS: /hostfs/sys
+      HOST_VAR: /hostfs/var
+      HOST_RUN: /hostfs/run
+      HOST_MOUNT_PREFIX: /hostfs
 
   grafana:
     image: grafana/grafana:latest
+    container_name: rpi-grafana
     ports:
       - '3000:3000'
     depends_on:
@@ -60,7 +58,7 @@ services:
     environment:
       GF_SECURITY_ADMIN_USER: ${GRAFANA_USERNAME}
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
-      GF_INSTALL_PLUGINS: grafana-strava-datasource,grafana-worldmap-panel,yesoreyeram-infinity-datasource
+      GF_INSTALL_PLUGINS: grafana-strava-datasource,grafana-worldmap-panel,yesoreyeram-infinity-datasource,grafana-clock-panel
       STRAVA_CLIENT_ID: ${STRAVA_CLIENT_ID}
       STRAVA_CLIENT_SECRET: ${STRAVA_CLIENT_SECRET}
       STRAVA_REFRESH_TOKEN: ${STRAVA_REFRESH_TOKEN}
