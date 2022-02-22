@@ -28,7 +28,7 @@
     {
       "gridPos": {
         "h": 6,
-        "w": 12,
+        "w": 11,
         "x": 0,
         "y": 0
       },
@@ -73,7 +73,7 @@
       "gridPos": {
         "h": 2,
         "w": 12,
-        "x": 12,
+        "x": 11,
         "y": 0
       },
       "id": 37,
@@ -121,7 +121,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 12,
+        "x": 11,
         "y": 2
       },
       "hideTimeOverride": true,
@@ -192,7 +192,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 15,
+        "x": 14,
         "y": 2
       },
       "hideTimeOverride": true,
@@ -262,7 +262,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 18,
+        "x": 17,
         "y": 2
       },
       "hideTimeOverride": true,
@@ -331,7 +331,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 21,
+        "x": 20,
         "y": 2
       },
       "hideTimeOverride": true,
@@ -366,7 +366,7 @@
     {
       "gridPos": {
         "h": 2,
-        "w": 12,
+        "w": 11,
         "x": 0,
         "y": 6
       },
@@ -382,7 +382,7 @@
       "gridPos": {
         "h": 2,
         "w": 12,
-        "x": 12,
+        "x": 11,
         "y": 6
       },
       "id": 13,
@@ -392,72 +392,6 @@
       },
       "pluginVersion": "8.3.6",
       "type": "text"
-    },
-    {
-      "circleMaxSize": "10",
-      "circleMinSize": "2",
-      "colors": [
-        "#73BF69",
-        "#8AB8FF",
-        "#1F60C4",
-        "#E0B400",
-        "#FA6400",
-        "#C4162A"
-      ],
-      "datasource": {
-        "type": "grafana-strava-datasource",
-        "uid": "PE9AA6F761190F23C"
-      },
-      "decimals": 0,
-      "esMetric": "Count",
-      "gridPos": {
-        "h": 23,
-        "w": 12,
-        "x": 0,
-        "y": 8
-      },
-      "hideEmpty": false,
-      "hideTimeOverride": true,
-      "hideZero": false,
-      "id": 20,
-      "initialZoom": "9",
-      "locationData": "table",
-      "mapCenter": "Last GeoHash",
-      "mapCenterLatitude": 47.34261,
-      "mapCenterLongitude": 10.81499,
-      "maxDataPoints": 1,
-      "mouseWheelZoom": true,
-      "showLegend": true,
-      "stickyLabels": true,
-      "tableLabel": "name",
-      "tableQueryOptions": {
-        "geohashField": "geohash",
-        "labelField": "name",
-        "latitudeField": "latitude",
-        "longitudeField": "longitude",
-        "metricField": "value",
-        "queryType": "coordinates"
-      },
-      "targets": [
-        {
-          "activityStat": "total_elevation_gain",
-          "datasource": {
-            "type": "strava",
-            "uid": "PE9AA6F761190F23C"
-          },
-          "format": "worldmap",
-          "queryType": "Activities",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "0,500,1000,150,2000",
-      "timeFrom": "10y",
-      "title": "Activities over the world",
-      "type": "grafana-worldmap-panel",
-      "unitPlural": "",
-      "unitSingle": "",
-      "unitSingular": "",
-      "valueName": "max"
     },
     {
       "datasource": {
@@ -481,7 +415,7 @@
               "type": "special"
             }
           ],
-          "max": 16,
+          "max": 20,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -511,7 +445,7 @@
       "gridPos": {
         "h": 7,
         "w": 6,
-        "x": 12,
+        "x": 11,
         "y": 8
       },
       "hideTimeOverride": true,
@@ -553,7 +487,7 @@
             "mode": "thresholds"
           },
           "mappings": [],
-          "max": 800000,
+          "max": 600000,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -583,7 +517,7 @@
       "gridPos": {
         "h": 7,
         "w": 6,
-        "x": 18,
+        "x": 17,
         "y": 8
       },
       "hideTimeOverride": true,
@@ -616,376 +550,468 @@
       "type": "gauge"
     },
     {
-      "aliasColors": {
-        "total_elevation_gain": "blue"
-      },
-      "bars": true,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": {
-        "type": "grafana-strava-datasource",
-        "uid": "PE9AA6F761190F23C"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
+      "collapsed": true,
       "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
+        "h": 1,
+        "w": 24,
+        "x": 0,
         "y": 15
       },
-      "hiddenSeries": false,
-      "id": 22,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": false,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "8.3.6",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
+      "id": 44,
+      "panels": [
         {
-          "alias": "total_elevation_gain",
-          "bars": false,
-          "pointradius": 5,
-          "points": true,
-          "yaxis": 2
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "activityStat": "distance",
-          "format": "time_series",
-          "queryType": "Activities",
-          "refId": "A"
-        },
-        {
-          "activityStat": "total_elevation_gain",
-          "format": "time_series",
-          "queryType": "Activities",
-          "refId": "B"
-        }
-      ],
-      "thresholds": [],
-      "timeRegions": [],
-      "title": "Distance/Elevation gain",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "lengthm",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
-    },
-    {
-      "datasource": "Strava",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
+          "circleMaxSize": "10",
+          "circleMinSize": "2",
+          "colors": [
+            "#73BF69",
+            "#8AB8FF",
+            "#1F60C4",
+            "#E0B400",
+            "#FA6400",
+            "#C4162A"
+          ],
+          "datasource": {
+            "type": "grafana-strava-datasource",
+            "uid": "PE9AA6F761190F23C"
           },
-          "custom": {
-            "align": "auto",
-            "displayMode": "auto",
-            "filterable": false
+          "decimals": 0,
+          "esMetric": "Count",
+          "gridPos": {
+            "h": 23,
+            "w": 12,
+            "x": 0,
+            "y": 16
           },
-          "decimals": 1,
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
+          "hideEmpty": false,
+          "hideTimeOverride": true,
+          "hideZero": false,
+          "id": 20,
+          "initialZoom": "9",
+          "locationData": "table",
+          "mapCenter": "Last GeoHash",
+          "mapCenterLatitude": 47.34261,
+          "mapCenterLongitude": 10.81499,
+          "maxDataPoints": 1,
+          "mouseWheelZoom": true,
+          "showLegend": true,
+          "stickyLabels": true,
+          "tableLabel": "name",
+          "tableQueryOptions": {
+            "geohashField": "geohash",
+            "labelField": "name",
+            "latitudeField": "latitude",
+            "longitudeField": "longitude",
+            "metricField": "value",
+            "queryType": "coordinates"
+          },
+          "targets": [
+            {
+              "activityStat": "total_elevation_gain",
+              "datasource": {
+                "type": "strava",
+                "uid": "PE9AA6F761190F23C"
               },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
+              "format": "worldmap",
+              "queryType": "Activities",
+              "refId": "A"
+            }
+          ],
+          "thresholds": "0,500,1000,150,2000",
+          "timeFrom": "10y",
+          "title": "Activities over the world",
+          "type": "grafana-worldmap-panel",
+          "unitPlural": "",
+          "unitSingle": "",
+          "unitSingular": "",
+          "valueName": "max"
+        },
+        {
+          "aliasColors": {
+            "total_elevation_gain": "blue"
+          },
+          "bars": true,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": {
+            "type": "grafana-strava-datasource",
+            "uid": "PE9AA6F761190F23C"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "links": []
+            },
+            "overrides": []
+          },
+          "fill": 1,
+          "fillGradient": 0,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 16
+          },
+          "hiddenSeries": false,
+          "id": 22,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": false,
+          "linewidth": 1,
+          "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
+          "percentage": false,
+          "pluginVersion": "8.3.6",
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "total_elevation_gain",
+              "bars": false,
+              "pointradius": 5,
+              "points": true,
+              "yaxis": 2
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "activityStat": "distance",
+              "format": "time_series",
+              "queryType": "Activities",
+              "refId": "A"
+            },
+            {
+              "activityStat": "total_elevation_gain",
+              "format": "time_series",
+              "queryType": "Activities",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeRegions": [],
+          "title": "Distance/Elevation gain",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "lengthm",
+              "logBase": 1,
+              "show": true
+            },
+            {
+              "format": "short",
+              "logBase": 1,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false
           }
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "moving time"
-            },
-            "properties": [
-              {
-                "id": "custom.displayMode",
-                "value": "lcd-gauge"
+        {
+          "datasource": "Strava",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
               },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "semi-dark-blue",
-                      "value": null
-                    },
-                    {
-                      "color": "dark-orange",
-                      "value": 1800
-                    },
-                    {
-                      "color": "red",
-                      "value": 3600
-                    }
-                  ]
-                }
+              "custom": {
+                "align": "auto",
+                "displayMode": "auto",
+                "filterable": false
               },
-              {
-                "id": "max",
-                "value": 14400
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "type"
-            },
-            "properties": [
-              {
-                "id": "custom.filterable",
-                "value": false
-              },
-              {
-                "id": "custom.hidden",
-                "value": true
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "kilojoules"
-            },
-            "properties": [
-              {
-                "id": "custom.displayMode",
-                "value": "gradient-gauge"
-              },
-              {
-                "id": "min",
-                "value": 0
-              },
-              {
-                "id": "max",
-                "value": 3000
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": null
-                    },
-                    {
-                      "color": "dark-orange",
-                      "value": 500
-                    },
-                    {
-                      "color": "dark-red",
-                      "value": 900
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "custom.width",
-                "value": 130
-              },
-              {
-                "id": "decimals",
-                "value": 0
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "distance"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 94
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "elapsed time"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 109
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "heart rate"
-            },
-            "properties": [
-              {
-                "id": "custom.hidden",
-                "value": true
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "elevation gain"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 113
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "name"
-            },
-            "properties": [
-              {
-                "id": "links",
-                "value": [
+              "decimals": 1,
+              "links": [],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
                   {
-                    "title": "Go to activity",
-                    "url": "d/StravaActivityOverview?var-Activity=${__data.fields.id}"
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "moving time"
+                },
+                "properties": [
+                  {
+                    "id": "custom.displayMode",
+                    "value": "lcd-gauge"
+                  },
+                  {
+                    "id": "thresholds",
+                    "value": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "semi-dark-blue",
+                          "value": null
+                        },
+                        {
+                          "color": "dark-orange",
+                          "value": 1800
+                        },
+                        {
+                          "color": "red",
+                          "value": 3600
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "max",
+                    "value": 14400
                   }
                 ]
               },
               {
-                "id": "custom.width",
-                "value": 490
+                "matcher": {
+                  "id": "byName",
+                  "options": "type"
+                },
+                "properties": [
+                  {
+                    "id": "custom.filterable",
+                    "value": false
+                  },
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "kilojoules"
+                },
+                "properties": [
+                  {
+                    "id": "custom.displayMode",
+                    "value": "gradient-gauge"
+                  },
+                  {
+                    "id": "min",
+                    "value": 0
+                  },
+                  {
+                    "id": "max",
+                    "value": 3000
+                  },
+                  {
+                    "id": "thresholds",
+                    "value": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "green",
+                          "value": null
+                        },
+                        {
+                          "color": "dark-orange",
+                          "value": 500
+                        },
+                        {
+                          "color": "dark-red",
+                          "value": 900
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 130
+                  },
+                  {
+                    "id": "decimals",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "distance"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 94
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "elapsed time"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 91
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "heart rate"
+                },
+                "properties": [
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "elevation gain"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 76
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "name"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "title": "Go to activity",
+                        "url": "d/StravaActivityOverview?var-Activity=${__data.fields.id}"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 343
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "time"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "time: YYYY-MM-DD"
+                  },
+                  {
+                    "id": "displayName",
+                    "value": "date"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "date"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 100
+                  }
+                ]
               }
             ]
           },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "time"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "time: YYYY-MM-DD"
-              },
-              {
-                "id": "displayName",
-                "value": "date"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 17,
-        "w": 12,
-        "x": 12,
-        "y": 24
-      },
-      "id": 42,
-      "options": {
-        "footer": {
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true,
-        "sortBy": []
-      },
-      "pluginVersion": "8.3.6",
-      "targets": [
-        {
-          "activityStat": "distance",
-          "extendedStats": [],
-          "format": "table",
-          "queryType": "Activities",
-          "refId": "A"
-        }
-      ],
-      "title": "Activities",
-      "transformations": [
-        {
-          "id": "organize",
+          "gridPos": {
+            "h": 17,
+            "w": 12,
+            "x": 12,
+            "y": 25
+          },
+          "id": 42,
           "options": {
-            "excludeByName": {},
-            "indexByName": {
-              "distance": 3,
-              "elapsed time": 5,
-              "elevation gain": 7,
-              "heart rate": 6,
-              "id": 9,
-              "kilojoules": 8,
-              "moving time": 4,
-              "name": 1,
-              "time": 0,
-              "type": 2
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
             },
-            "renameByName": {}
-          }
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "8.3.6",
+          "targets": [
+            {
+              "activityStat": "distance",
+              "extendedStats": [],
+              "format": "table",
+              "queryType": "Activities",
+              "refId": "A"
+            }
+          ],
+          "title": "Activities",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "indexByName": {
+                  "distance": 3,
+                  "elapsed time": 5,
+                  "elevation gain": 7,
+                  "heart rate": 6,
+                  "id": 9,
+                  "kilojoules": 8,
+                  "moving time": 4,
+                  "name": 1,
+                  "time": 0,
+                  "type": 2
+                },
+                "renameByName": {}
+              }
+            }
+          ],
+          "type": "table"
         }
       ],
-      "type": "table"
+      "title": "Bike Details",
+      "type": "row"
     }
   ],
   "refresh": false,
