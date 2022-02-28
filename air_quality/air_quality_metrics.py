@@ -24,5 +24,5 @@ temperature_offset = 0
 
 temp = bme680.temperature + temperature_offset
 
-print("air_quality,room=living_room temperature=%f,gas=%d,humidity=%f,pressure=%f,altitude=%f" % temp, bme680.gas, bme680.relative_humidity, bme680.pressure, bme680.altitude)
+print("air_quality,room=living_room temperature=%f,gas=%d,humidity=%f,pressure=%f,altitude=%f" % (temp, bme680.gas, bme680.relative_humidity, bme680.pressure, bme680.altitude))
 
