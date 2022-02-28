@@ -32,6 +32,8 @@ services:
       - ./etc/telegraf.conf:/etc/telegraf/telegraf.conf:ro
       - /:/hostfs:ro
       - ./air_quality:/etc/scripts/air_quality:ro
+    devices:
+      - "/dev/i2c-1:/dev/i2c-1"
     environment:
       INFLUXDB_URL: http://influxdb:8086
       INFLUXDB_TOKEN: ${INFLUXDB_TOKEN}
