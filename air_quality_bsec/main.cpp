@@ -1,53 +1,19 @@
 #include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <fcntl.h>
-#include <string.h>
 #include <unistd.h>
-#include <inttypes.h>
-#include <sys/ioctl.h>
-#include <sys/types.h>
 #include <sys/stat.h>
-#include <linux/i2c-dev.h>
-#include "bsec_datatypes.h"
-#include "bsec_integration.h"
-#include "bme680.h"
+#include <bsec_datatypes.h>
+#include <bsec_integration.h>
 
-/* definitions */
+#include "i2c_connection.h"
 
-#define DESTZONE "TZ=Europe/Berlin"
-#define temp_offset (5.0f)
-#define sample_rate_mode (BSEC_SAMPLE_RATE_LP)
 
-int g_i2cFid; // I2C Linux device handle
-int i2c_address = BME680_I2C_ADDR_PRIMARY;
-char *filename_state = "bsec_iaq.state";
-char *filename_config = "bsec_iaq.config";
+I2CConnection i2cCon = I2CConnection();
 
-/* functions */
+float tempOffset = 5.0f;
+auto sampleRateMode = BSEC_SAMPLE_RATE_LP;
+std::string filenameState = "bsec_iaq.state";
+std::string filenameConfig = "bsec_iaq.config";
 
-void i2cOpen()
-{
-  g_i2cFid = open("/dev/i2c-1", O_RDWR);
-  if (g_i2cFid < 0) {
-    perror("i2cOpen");
-    exit(1);
-  }
-}
-
-void i2cClose()
-{
-  close(g_i2cFid);
-}
-
-void i2cSetAddress(int address)
-{
-  if (ioctl(g_i2cFid, I2C_SLAVE, address) < 0) {
-    perror("i2cSetAddress");
-    exit(1);
-  }
-}
 
 int8_t bus_write(uint8_t dev_addr, uint8_t reg_addr, uint8_t *reg_data_ptr, uint16_t data_len)
 {
@@ -59,7 +25,7 @@ int8_t bus_write(uint8_t dev_addr, uint8_t reg_addr, uint8_t *reg_data_ptr, uint
   for (int i=1; i<data_len+1; i++)
     reg[i] = reg_data_ptr[i-1];
 
-  if (write(g_i2cFid, reg, data_len+1) != data_len+1) {
+  if (write(i2cCon.i2cFid(), reg, data_len+1) != data_len+1) {
     perror("user_i2c_write");
     rslt = 1;
     exit(1);
@@ -75,12 +41,12 @@ int8_t bus_read(uint8_t dev_addr, uint8_t reg_addr, uint8_t *reg_data_ptr, uint1
   uint8_t reg[1];
   reg[0]=reg_addr;
 
-  if (write(g_i2cFid, reg, 1) != 1) {
+  if (write(i2cCon.i2cFid(), reg, 1) != 1) {
     perror("user_i2c_read_reg");
     rslt = 1;
   }
 
-  if (read(g_i2cFid, reg_data_ptr, data_len) != data_len) {
+  if (read(i2cCon.i2cFid(), reg_data_ptr, data_len) != data_len) {
     perror("user_i2c_read_data");
     rslt = 1;
   }
@@ -88,7 +54,7 @@ int8_t bus_read(uint8_t dev_addr, uint8_t reg_addr, uint8_t *reg_data_ptr, uint1
   return rslt;
 }
 
-void sleep(uint32_t t_ms)
+void sleep_ms(uint32_t t_ms)
 {
   struct timespec ts;
   ts.tv_sec = 0;
@@ -118,17 +84,15 @@ void output_ready(int64_t timestamp, float iaq, uint8_t iaq_accuracy, float temp
   time_t t = time(NULL);
   struct tm tm = *localtime(&t);
 
-  printf("{\"IAQ_Accuracy\": \"%d\",\"IAQ\":\"%.2f\"", iaq_accuracy, iaq);
-  printf(",\"Temperature\": \"%.2f\",\"Humidity\": \"%.2f\",\"Pressure\": \"%.2f\"", temperature, humidity,pressure / 100);
-  printf(",\"Gas\": \"%.0f\"", gas);
-  printf(",\"Status\": \"%d\"}", bsec_status);
-  //printf(",%" PRId64, timestamp);
-  //printf(",%" PRId64, timestamp_ms);
-  printf("\r\n");
-  fflush(stdout);
+  std::cout << "IAQ (accuracy): " << iaq << " (" << iaq_accuracy << ")" << std::endl;
+  std::cout << "Temperature:     " << temperature << std::endl;
+  std::cout << "Humidity:        " << humidity << std::endl;
+  std::cout << "Pressure:        " << pressure / 100 << std::endl;
+  std::cout << "Gas:             " << gas << std::endl;
+  std::cout << "Status:          " << bsec_status << std::endl;
 }
 
-uint32_t binary_load(uint8_t *b_buffer, uint32_t n_buffer, char *filename,
+uint32_t binary_load(uint8_t *b_buffer, uint32_t n_buffer, const char* filename,
                      uint32_t offset)
 {
   int32_t copied_bytes = 0;
@@ -167,7 +131,7 @@ uint32_t binary_load(uint8_t *b_buffer, uint32_t n_buffer, char *filename,
 uint32_t state_load(uint8_t *state_buffer, uint32_t n_buffer)
 {
   int32_t rslt = 0;
-  rslt = binary_load(state_buffer, n_buffer, filename_state, 0);
+  rslt = binary_load(state_buffer, n_buffer, filenameState.c_str(), 0);
   return rslt;
     return 0;
 }
@@ -175,35 +139,35 @@ uint32_t state_load(uint8_t *state_buffer, uint32_t n_buffer)
 void state_save(const uint8_t *state_buffer, uint32_t length)
 {
   FILE *state_w_ptr;
-  state_w_ptr = fopen(filename_state,"wb");
+  state_w_ptr = fopen(filenameState.c_str(),"wb");
   fwrite(state_buffer,length,1,state_w_ptr);
   fclose(state_w_ptr);
 }
 
 uint32_t config_load(uint8_t *config_buffer, uint32_t n_buffer)
 {
-  int32_t rslt = binary_load(config_buffer, n_buffer, filename_config, 4);
+  int32_t rslt = binary_load(config_buffer, n_buffer, filenameConfig.c_str(), 4);
   return rslt;
 }
 
 int main()
 {
-  putenv(DESTZONE); 
+  if (!i2cCon.i2cOpen()) {
+    std::cout << "Failed to open i2c bus" << std::endl;
+    return -1;
+  }
 
-  i2cOpen();
-  i2cSetAddress(i2c_address);
-
-  return_values_init ret = bsec_iot_init(sample_rate_mode, temp_offset, bus_write, bus_read,
-                      _sleep, state_load, config_load);
+  return_values_init ret = bsec_iot_init(sampleRateMode, tempOffset, bus_write, bus_read,
+                      sleep_ms, state_load, config_load);
   if (ret.bme680_status) {
     return (int)ret.bme680_status;
   } else if (ret.bsec_status) {
     return (int)ret.bsec_status;
   }
 
-  bsec_iot_loop(_sleep, get_timestamp_us, output_ready, state_save, 10000);
+  bsec_iot_loop(sleep_ms, get_timestamp_us, output_ready, state_save, 10000);
 
-  i2cClose();
+  i2cCon.i2cClose();
   return 0;
 }
 
