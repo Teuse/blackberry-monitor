@@ -19,8 +19,24 @@ services:
       DOCKER_INFLUXDB_INIT_BUCKET: ${INFLUXDB_BUCKET}
       DOCKER_INFLUXDB_INIT_RETENTION: 260w # 5 Years = 5*52w
 
-  telegraf_with_python:
-    build: ./telegraf_with_python/
+  air_quality:
+    build: ./air_quality/
+    container_name: rpi-air-quality
+    depends_on:
+     - influxdb
+    volumes:
+     - air-quality-storage:/etc/airquality
+    devices:
+      - "/dev/i2c-1:/dev/i2c-1"
+    # user: "1000:998"
+    environment:
+      INFLUXDB_URL: http://influxdb:8086
+      INFLUXDB_TOKEN: ${INFLUXDB_TOKEN}
+      INFLUXDB_ORG: ${INFLUXDB_ORG}
+      INFLUXDB_BUCKET: ${INFLUXDB_BUCKET}
+
+  telegraf:
+    image: telegraf:latest
     container_name: rpi-telegraf
     ports:
       - "8092:8092/udp"
@@ -31,10 +47,6 @@ services:
     volumes:
       - ./etc/telegraf.conf:/etc/telegraf/telegraf.conf:ro
       - /:/hostfs:ro
-      - ./air_quality:/etc/scripts/air_quality:ro
-    devices:
-      - "/dev/i2c-1:/dev/i2c-1"
-    user: "1000:998"
     environment:
       INFLUXDB_URL: http://influxdb:8086
       INFLUXDB_TOKEN: ${INFLUXDB_TOKEN}
@@ -70,3 +82,4 @@ volumes:
   grafana-storage:
   influxdb-storage-data:
   influxdb-storage-config:
+  air-quality-storage:
