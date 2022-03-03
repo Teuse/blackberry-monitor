@@ -8,7 +8,6 @@ ENV TZ=Europe/Berlin
 WORKDIR /repo
 
 RUN --mount=type=bind,target=/repo,rw \
-	cmake . && make && \
-	mv ./air_quality /etc
+	cmake . && make
 
-CMD ["air_quality"]
+CMD ["./air_quality"]

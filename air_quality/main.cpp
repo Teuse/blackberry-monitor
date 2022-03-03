@@ -11,9 +11,8 @@ I2CConnection i2cCon = I2CConnection();
 
 float tempOffset = 5.0f;
 auto sampleRateMode = BSEC_SAMPLE_RATE_LP;
-std::string filenameState = "bsec_iaq.state";
-std::string filenameConfig = "bsec_iaq.config";
-
+std::string filenameState = "/etc/airquality/bsec_iaq.state";
+std::string filenameConfig = "/etc/airquality/bsec_iaq.config";
 
 int8_t bus_write(uint8_t dev_addr, uint8_t reg_addr, uint8_t *reg_data_ptr, uint16_t data_len)
 {

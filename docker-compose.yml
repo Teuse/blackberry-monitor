@@ -21,11 +21,11 @@ services:
 
   air_quality:
     build: ./air_quality/
-    container_name: rpi-air-quality
+    container_name: rpi-airquality
     depends_on:
      - influxdb
     volumes:
-     - air-quality-storage:/etc/airquality
+     - airquality-storage:/etc/airquality
     devices:
       - "/dev/i2c-1:/dev/i2c-1"
     # user: "1000:998"
@@ -82,4 +82,4 @@ volumes:
   grafana-storage:
   influxdb-storage-data:
   influxdb-storage-config:
-  air-quality-storage:
+  airquality-storage:

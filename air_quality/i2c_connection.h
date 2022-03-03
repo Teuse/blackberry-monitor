@@ -1,5 +1,7 @@
 #if __linux__
+#include <fcntl.h>
 #include <linux/i2c-dev.h>
+#include <sys/ioctl.h>
 #endif
 
 class I2CConnection
@@ -9,7 +11,7 @@ public:
     {}
 
     int i2cFid() { return _i2cFid; }
-    int i2cAddress() { return i2c_address; }
+    int i2cAddress() { return _i2cAddress; }
 
     bool isOpen() { return (_i2cFid >= 0); }
 
@@ -19,12 +21,12 @@ public:
         if (isOpen()) {
             return true;
         }
-        g_i2cFid = open("/dev/i2c-1", O_RDWR);
-        bool success = (g_i2cFid >= 0);
+        _i2cFid = open("/dev/i2c-1", O_RDWR);
+        bool success = (_i2cFid >= 0);
         if (success) {
-            i2cSetAddress(i2c_address)
+            i2cSetAddress();
         }
-        return succecc;
+        return success;
         #else
         return true;
         #endif
@@ -33,18 +35,17 @@ public:
     void i2cClose()
     {
         #if __linux__
-        close(g_i2cFid);
+        close(_i2cFid);
         #endif
         _i2cFid = -1;
     }
 
 private:
 
-bool i2cSetAddress(int address)
+    bool i2cSetAddress()
     {
         #if __linux__
-        if (isOpen() && ioctl(g_i2cFid, I2C_SLAVE, address) < 0)
-        {
+        if (isOpen() && ioctl(_i2cFid, I2C_SLAVE, _i2cAddress) < 0) {
             return false;
         }
         #endif
@@ -52,5 +53,5 @@ bool i2cSetAddress(int address)
     }
 
     int _i2cFid = -1;
-    int i2c_address = BME680_I2C_ADDR_PRIMARY;
+    int _i2cAddress = BME680_I2C_ADDR_PRIMARY;
 };
