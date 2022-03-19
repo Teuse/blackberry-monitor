@@ -19,21 +19,21 @@ services:
       DOCKER_INFLUXDB_INIT_BUCKET: ${INFLUXDB_BUCKET}
       DOCKER_INFLUXDB_INIT_RETENTION: 260w # 5 Years = 5*52w
 
-  air_quality:
-    build: ./air_quality/
-    container_name: rpi-airquality
-    depends_on:
-     - influxdb
-    volumes:
-     - airquality-storage:/etc/airquality
-    devices:
-      - "/dev/i2c-1:/dev/i2c-1"
-    # user: "1000:998"
-    environment:
-      INFLUXDB_URL: http://influxdb:8086
-      INFLUXDB_TOKEN: ${INFLUXDB_TOKEN}
-      INFLUXDB_ORG: ${INFLUXDB_ORG}
-      INFLUXDB_BUCKET: ${INFLUXDB_BUCKET}
+  # air_quality:
+  #   build: ./air_quality/
+  #   container_name: rpi-airquality
+  #   depends_on:
+  #    - influxdb
+  #   volumes:
+  #    - airquality-storage:/etc/airquality
+  #   devices:
+  #     - "/dev/i2c-1:/dev/i2c-1"
+  #   # user: "1000:998"
+  #   environment:
+  #     INFLUXDB_URL: http://influxdb:8086
+  #     INFLUXDB_TOKEN: ${INFLUXDB_TOKEN}
+  #     INFLUXDB_ORG: ${INFLUXDB_ORG}
+  #     INFLUXDB_BUCKET: ${INFLUXDB_BUCKET}
 
   telegraf:
     image: telegraf:latest
