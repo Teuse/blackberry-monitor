@@ -21,7 +21,7 @@ set(FILES_AQ i2c_connection.h
 add_executable(air_quality main.cpp ${FILES_AQ} ${FILES_BSEC})
 
 target_include_directories(air_quality PUBLIC
-   ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/inc
+   # ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/inc
    ${CMAKE_SOURCE_DIR}/${PATH_BSEC})
 
 
@@ -33,7 +33,11 @@ target_include_directories(air_quality PUBLIC
 #    target_link_libraries(air_quality ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/gcc/Linux/x64/libalgobsec.a)
 #    target_include_directories(air_quality PUBLIC ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/gcc/Linux/x64)
 # else ()
-target_link_libraries(air_quality ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV6/libalgobsec.a)
-target_include_directories(air_quality PUBLIC ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV6)
+add_library(air_quality STATIC IMPORTED GLOBAL)
+set_target_properties(air_quality PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8/libalgobsec.a")
+set_target_properties(air_quality PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8)
+
+target_link_libraries(air_quality PUBLIC ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8/libalgobsec.a)
+# target_include_directories(air_quality PUBLIC ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8)
 # endif()
 
