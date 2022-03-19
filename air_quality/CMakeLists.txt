@@ -33,7 +33,7 @@ target_include_directories(air_quality PUBLIC
 #    target_link_libraries(air_quality ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/gcc/Linux/x64/libalgobsec.a)
 #    target_include_directories(air_quality PUBLIC ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/gcc/Linux/x64)
 # else ()
-add_library(air_quality STATIC IMPORTED GLOBAL)
+# add_library(air_quality STATIC IMPORTED GLOBAL)
 set_target_properties(air_quality PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8/libalgobsec.a")
 set_target_properties(air_quality PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8)
 
