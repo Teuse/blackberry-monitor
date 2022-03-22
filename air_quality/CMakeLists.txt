@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(air_quality)
 
-set (CMAKE_CXX_STANDARD 20)
+set (CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
@@ -30,14 +30,14 @@ target_include_directories(air_quality PUBLIC
 #    target_include_directories(air_quality PUBLIC ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/MAC)
 
 # elseif (UNIX)
-#    target_link_libraries(air_quality ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/gcc/Linux/x64/libalgobsec.a)
-#    target_include_directories(air_quality PUBLIC ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/gcc/Linux/x64)
+   target_link_libraries(air_quality ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/gcc/Linux/x64/libalgobsec.a)
+   target_include_directories(air_quality PUBLIC ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/gcc/Linux/x64)
 # else ()
 # add_library(air_quality STATIC IMPORTED GLOBAL)
-set_target_properties(air_quality PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8/libalgobsec.a")
-set_target_properties(air_quality PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8)
+# set_target_properties(air_quality PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8/libalgobsec.a")
+# set_target_properties(air_quality PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8)
 
-target_link_libraries(air_quality PUBLIC ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8/libalgobsec.a)
+# target_link_libraries(air_quality PUBLIC ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8/libalgobsec.a)
 # target_include_directories(air_quality PUBLIC ${CMAKE_SOURCE_DIR}/${PATH_BSEC_BASE}/algo/normal_version/bin/RaspberryPi/PiThree_ArmV8)
 # endif()
 
