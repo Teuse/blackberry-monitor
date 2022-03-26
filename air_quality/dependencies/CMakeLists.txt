@@ -14,9 +14,14 @@ set(FILES_BSEC ${PATH_BSEC_EXAMPLE}/bsec_interface.h
 
 add_library(bme680 STATIC ${FILES_BSEC})
 
-target_compile_options(bme680 PRIVATE -Wno-unused-but-set-variable -Wno-unused-variable)
+# target_compile_options(bme680 PRIVATE -Wno-unused-but-set-variable -Wno-unused-variable)
 
-target_link_libraries(bme680 PUBLIC ${PATH_BSEC_LIB}/libalgobsec.a)
+if(EXISTS "${PATH_BSEC_LIB}/libalgobsec.a")
+	target_link_libraries(bme680 PUBLIC ${PATH_BSEC_LIB}/libalgobsec.a)
+else()
+	message("Library algobsec.a missing")
+endif()
+
 
 target_include_directories(bme680 PUBLIC ${PATH_BSEC_EXAMPLE}) 
 #${PATH_BSEC_LIB})
