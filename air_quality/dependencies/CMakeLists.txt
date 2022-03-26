@@ -4,8 +4,8 @@ set(PATH_BSEC_BASE    ${CMAKE_CURRENT_SOURCE_DIR}/BSEC_1.4.8.0_Generic_Release_u
 set(PATH_BSEC_EXAMPLE ${PATH_BSEC_BASE}/examples/bsec_iot_example)
 set(PATH_BSEC_LIB     ${PATH_BSEC_BASE}/algo/normal_version/bin/gcc/Linux/x64)
 
-set(FILES_BSEC ${PATH_BSEC_LIB}/bsec_interface.h
-               ${PATH_BSEC_LIB}/bsec_datatypes.h
+set(FILES_BSEC ${PATH_BSEC_EXAMPLE}/bsec_interface.h
+               ${PATH_BSEC_EXAMPLE}/bsec_datatypes.h
                ${PATH_BSEC_EXAMPLE}/bsec_integration.c
                ${PATH_BSEC_EXAMPLE}/bsec_integration.h
                ${PATH_BSEC_EXAMPLE}/bme680.h
