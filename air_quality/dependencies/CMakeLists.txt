@@ -16,9 +16,10 @@ add_library(bme680 STATIC ${FILES_BSEC})
 
 target_compile_options(bme680 PRIVATE -Wno-unused-but-set-variable -Wno-unused-variable)
 
-set_target_properties(bme680 PROPERTIES IMPORTED_LOCATION ${PATH_BSEC_LIB}/libalgobsec.a)
+target_link_libraries(bme680 PUBLIC ${PATH_BSEC_LIB}/libalgobsec.a)
 
-target_include_directories(bme680 PUBLIC ${PATH_BSEC_EXAMPLE} ${PATH_BSEC_LIB})
+target_include_directories(bme680 PUBLIC ${PATH_BSEC_EXAMPLE}) 
+#${PATH_BSEC_LIB})
 
 # For some reason, math library isn't implicitly imported so that needs to be manually
 # done for now. You might be able to get rid of the hack at some point
