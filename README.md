@@ -44,5 +44,5 @@ STRAVA_REFRESH_TOKEN=<strava-refresh-token>
 
 In the project root dir, run:
 ```
-docker-compose up -d
+docker compose up -d
 ```
