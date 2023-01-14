@@ -4,6 +4,11 @@
 #include <sys/ioctl.h>
 #endif
 
+#include "bme68x_defs.h"
+
+#define BME680_I2C_ADDR_PRIMARY		UINT8_C(0x76)
+#define BME680_I2C_ADDR_SECONDARY	UINT8_C(0x77)
+
 class I2CConnection
 {
 public:

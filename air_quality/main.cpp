@@ -16,17 +16,17 @@ std::string filenameConfig = "/etc/airquality/bsec_iaq.config";
 
 influxdb_cpp::server_info si("127.0.0.1", 8086, "org0", "supersecrettoken", "bucket0");
 
-int8_t bus_write(uint8_t dev_addr, uint8_t reg_addr, uint8_t *reg_data_ptr, uint16_t data_len)
+BME68X_INTF_RET_TYPE bus_write(uint8_t reg_addr, const uint8_t *reg_data_ptr, uint32_t length, void *inft_ptr)
 {
 	int8_t rslt = 0; /* Return 0 for Success, non-zero for failure */
 
 	uint8_t reg[16];
 	reg[0] = reg_addr;
 
-	for (int i = 1; i < data_len + 1; i++)
+	for (int i = 1; i < length + 1; i++)
 		reg[i] = reg_data_ptr[i - 1];
 
-	if (write(i2cCon.i2cFid(), reg, data_len + 1) != data_len + 1)
+	if (write(i2cCon.i2cFid(), reg, length + 1) != length + 1)
 	{
 		perror("user_i2c_write");
 		rslt = 1;
@@ -36,7 +36,7 @@ int8_t bus_write(uint8_t dev_addr, uint8_t reg_addr, uint8_t *reg_data_ptr, uint
 	return rslt;
 }
 
-int8_t bus_read(uint8_t dev_addr, uint8_t reg_addr, uint8_t *reg_data_ptr, uint16_t data_len)
+BME68X_INTF_RET_TYPE bus_read(uint8_t reg_addr, uint8_t *reg_data_ptr, uint32_t length, void *intf_ptr)
 {
 	int8_t rslt = 0; /* Return 0 for Success, non-zero for failure */
 
@@ -49,7 +49,7 @@ int8_t bus_read(uint8_t dev_addr, uint8_t reg_addr, uint8_t *reg_data_ptr, uint1
 		rslt = 1;
 	}
 
-	if (read(i2cCon.i2cFid(), reg_data_ptr, data_len) != data_len)
+	if (read(i2cCon.i2cFid(), reg_data_ptr, length) != length)
 	{
 		perror("user_i2c_read_data");
 		rslt = 1;
@@ -58,7 +58,7 @@ int8_t bus_read(uint8_t dev_addr, uint8_t reg_addr, uint8_t *reg_data_ptr, uint1
 	return rslt;
 }
 
-void sleep_ms(uint32_t t_ms)
+void sleep_ms(uint32_t t_ms, void *intf_ptr)
 {
 	struct timespec ts;
 	ts.tv_sec = 0;
@@ -81,8 +81,8 @@ int64_t get_timestamp_us()
 }
 
 void output_ready(int64_t timestamp, float iaq, uint8_t iaq_accuracy, float temperature, float humidity,
-						float pressure, float raw_temperature, float raw_humidity, float gas, bsec_library_return_t bsec_status,
-						float static_iaq, float co2_equivalent, float breath_voc_equivalent)
+						float pressure, float raw_temperature, float raw_humidity, float gas, float gas_persentage, bsec_library_return_t bsec_status,
+						float static_iaq, float stabStatus, float runInStatus, float co2_equivalent, float breath_voc_equivalent)
 {
 	time_t t = time(NULL);
 	struct tm tm = *localtime(&t);
@@ -184,9 +184,9 @@ int main()
 
 	return_values_init ret = bsec_iot_init(sampleRateMode, tempOffset, bus_write, bus_read,
 														sleep_ms, state_load, config_load);
-	if (ret.bme680_status)
+	if (ret.bme68x_status)
 	{
-		return (int)ret.bme680_status;
+		return (int)ret.bme68x_status;
 	}
 	else if (ret.bsec_status)
 	{
