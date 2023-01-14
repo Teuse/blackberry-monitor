@@ -8,7 +8,7 @@ datasources:
     jsonData:
       version: Flux
       organization: org0
-      defaultBucket: bucket0
+      defaultBucket: ${INFLUXDB_BUCKET}
       tlsSkipVerify: true
 
   - name: Strava

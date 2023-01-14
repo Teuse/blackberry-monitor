@@ -1,6 +1,6 @@
 
 
-set(PATH_BSEC_BASE    ${CMAKE_CURRENT_SOURCE_DIR}/BSEC_1.4.8.0_Generic_Release_updated_v3)
+set(PATH_BSEC_BASE    ${CMAKE_CURRENT_SOURCE_DIR}/bsec_1-4-9-2_generic_release)
 set(PATH_BSEC_EXAMPLE ${PATH_BSEC_BASE}/examples/bsec_iot_example)
 set(PATH_BSEC_LIB     ${PATH_BSEC_BASE}/algo/normal_version/bin/gcc/Linux/x64)
 
