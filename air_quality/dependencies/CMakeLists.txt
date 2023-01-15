@@ -1,5 +1,4 @@
 
-
 set(PATH_BSEC_BASE    ${CMAKE_CURRENT_SOURCE_DIR}/bsec_1-4-9-2_generic_release)
 set(PATH_BSEC_EXAMPLE ${PATH_BSEC_BASE}/examples)
 set(PATH_BSEC_INC     ${PATH_BSEC_BASE}/algo/normal_version/inc)
@@ -23,6 +22,16 @@ add_library(bme680 STATIC ${FILES_BSEC} ${FILES_BME68X})
 # target_compile_options(bme680 PRIVATE -Wno-unused-but-set-variable -Wno-unused-variable)
 
 link_directories(${PATH_BSEC_LIB})
+
+set(PATH_I2C_32BIT_BASE    /home/teuse/i2c-32bit/i2c-tools-4.2)
+if(EXISTS "${PATH_I2C_32BIT_BASE}/lib")
+    set_target_properties(bme680 PROPERTIES IMPORTED_LOCATION ${PATH_I2C_32BIT_BASE}/lib)
+    target_link_libraries(bme680 PUBLIC ${PATH_I2C_32BIT_BASE}/lib)
+    target_include_directories(bme680 PUBLIC ${PATH_I2C_32BIT_BASE}/include) 
+    message("Custom I2C Library (32-bit) used")
+else()
+    message("Default I2C Library used")
+endif()
 
 if(EXISTS "${PATH_BSEC_LIB}/libalgobsec.a")
 	set_target_properties(bme680 PROPERTIES IMPORTED_LOCATION ${PATH_BSEC_LIB}/libalgobsec.a)
