@@ -30,9 +30,9 @@ print("### MH-Z19B ###")
 print(mh_z19.read_all())
 print("CO2 = %0.2f " % mhz19['co2'])
 print("Temperature = %0.1f C" % mhz19['temperature'])
-print("TT = %0.2f " % mhz19['tt'])
-print("SS = %0.2f " % mhz19['ss'])
-print("UhUl = %0.2f " % mhz19['uhul'])
+print("TT = %0.2f " % mhz19['TT'])
+print("SS = %0.2f " % mhz19['SS'])
+print("UhUl = %0.2f " % mhz19['UhUl'])
 
 config = dotenv_values("../.env")
 bucket = config['INFLUXDB_BUCKET']
@@ -51,9 +51,9 @@ p = influxdb_client.Point("my_measurement") \
       .field("gas", bme680.gas)  \
       .field("altitude", bme680.altitude)  \
       .field("co2", mhz19['co2'])  \
-      .field("tt", mhz19['tt'])  \
-      .field("ss", mhz19['ss']) \
-      .field("uhul", mhz19['uhul']) 
+      .field("tt", mhz19['TT'])  \
+      .field("ss", mhz19['SS']) \
+      .field("uhul", mhz19['UhUl']) 
 
 write_api.write(bucket=bucket, org=org, record=p)
 
