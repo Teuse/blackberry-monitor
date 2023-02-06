@@ -8,11 +8,18 @@ from dotenv import dotenv_values
 import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
 
-# Create library object using our Bus I2C port
+# Read .env file
+config = dotenv_values()
+
+# InfluxDB configuration
+bucket = config['INFLUXDB_BUCKET']
+org = config['INFLUXDB_ORG']
+token = config['INFLUXDB_TOKEN']
+url="http://localhost:8086"
+
+# BME680
 i2c = I2C(board.SCL, board.SDA)
 bme680 = adafruit_bme680.Adafruit_BME680_I2C(i2c, debug=False)
-
-# change this to match the location's pressure (hPa) at sea level
 bme680.sea_level_pressure = 1033
 bme680_temperature_offset = 0
 
@@ -24,6 +31,7 @@ print("Pressure: %0.3f hPa" % bme680.pressure)
 print("Altitude = %0.2f meters" % bme680.altitude)
 print()
 
+# MH-Z19
 mhz19 = mh_z19.read_all()
 
 print("### MH-Z19B ###")
@@ -34,17 +42,12 @@ print("TT = %0.2f " % mhz19['TT'])
 print("SS = %0.2f " % mhz19['SS'])
 print("UhUl = %0.2f " % mhz19['UhUl'])
 
-config = dotenv_values("../.env")
-bucket = config['INFLUXDB_BUCKET']
-org = config['INFLUXDB_ORG']
-token = config['INFLUXDB_TOKEN']
-url="http://localhost:8086"
-
+# InfluxDB
 client = influxdb_client.InfluxDBClient(url=url, token=token, org=org)
 write_api = client.write_api(write_options=SYNCHRONOUS)
 
-p = influxdb_client.Point("my_measurement") \
-      .tag("location", "Prague") \
+p = influxdb_client.Point("air_quality") \
+      .tag("location", "living room") \
       .field("temperature", mhz19['temperature']) \
       .field("humidity", bme680.relative_humidity)  \
       .field("pressure", bme680.pressure)  \
@@ -56,4 +59,3 @@ p = influxdb_client.Point("my_measurement") \
       .field("uhul", mhz19['UhUl']) 
 
 write_api.write(bucket=bucket, org=org, record=p)
-
