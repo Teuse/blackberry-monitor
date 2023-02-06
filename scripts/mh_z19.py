@@ -3,6 +3,7 @@
 #
 # © Takeyuki UEDA 2015 -
 
+from dataclasses import dataclass
 import serial
 import time
 import subprocess
@@ -22,6 +23,14 @@ version = "3.1.3"
 pimodel        = getrpimodel.model()
 pimodel_strict = getrpimodel.model_strict()
 retry_count    = 3
+
+@dataclass
+class MH_Result:
+    co2: int
+    temperature: int
+    tt: int
+    ss: int
+    uhul: int
 
 # exception
 class GPIO_Edge_Timeout(Exception):
@@ -105,7 +114,7 @@ def read_co2valueonly(serial_console_untouched=False):
     start_getty()
   return result
 
-def read_all(serial_console_untouched=False):
+def get_all(serial_console_untouched=False):
   if not serial_console_untouched:
     stop_getty()
   try:
@@ -116,27 +125,29 @@ def read_all(serial_console_untouched=False):
 
       if p_ver == '2':
         if len(s) >= 9 and s[0] == "\xff" and s[1] == "\x86" and checksum(s[1:-1]) == s[-1]:
-          return {'co2': ord(s[2])*256 + ord(s[3]),
-                  'temperature': ord(s[4]) - 40,
-                  'TT': ord(s[4]),
-                  'SS': ord(s[5]),
-                  'UhUl': ord(s[6])*256 + ord(s[7])
-                  }
+          return MH_Result(ord(s[2])*256 + ord(s[3]), ord(s[4]), ord(s[5]), ord(s[6])*256 + ord(s[7]))
         break
       else:
         if len(s) >= 9 and s[0] == 0xff and s[1] == 0x86 and ord(checksum(s[1:-1])) == s[-1]:
-          return {'co2': s[2]*256 + s[3],
-                  'temperature': s[4] - 40,
-                  'TT': s[4],
-                  'SS': s[5],
-                  'UhUl': s[6]*256 + s[7]
-                  }
+          return MH_Result(s[2]*256 + s[3], s[4] - 40, s[4], s[5], s[6]*256 + s[7])
   except:
      traceback.print_exc()
 
   if not serial_console_untouched:
     start_getty()
-  return {}
+  return None
+
+def read_all(serial_console_untouched=False):
+  values = get_all(serial_console_untouched)
+  if values is not None:
+    return {'co2': values.co2,
+            'temperature': values.temperature,
+            'TT': values.tt,
+            'SS': values.ss,
+            'UhUl': values.uhul
+            }
+  else:
+    return {}
 
 def abc_on(serial_console_untouched=False):
   if not serial_console_untouched:

@@ -2,7 +2,7 @@
 import board
 from busio import I2C
 import adafruit_bme680
-import mh_z19
+from . import mh_z19
 
 # Create library object using our Bus I2C port
 i2c = I2C(board.SCL, board.SDA)
@@ -19,6 +19,8 @@ temperature_offset = 0
 
 temperature = bme680.temperature + temperature_offset
 
+mhz19 = mh_z19.get_all()
+
 print("### BME860 ###")
 print("Temperature: %0.1f C" % temperature)
 print("Gas: %d ohm" % bme680.gas)
@@ -26,6 +28,11 @@ print("Humidity: %0.1f %%" % bme680.relative_humidity)
 print("Pressure: %0.3f hPa" % bme680.pressure)
 print("Altitude = %0.2f meters" % bme680.altitude)
 print()
+
 print("### MH-Z19B ###")
 print(mh_z19.read_all())
-
+print("CO2 = %0.2f " % mhz19.co2)
+print("Temperature = %0.1f C" % mhz19.temperature)
+print("TT = %0.2f " % mhz19.tt)
+print("SS = %0.2f " % mhz19.ss)
+print("UhUl = %0.2f " % mhz19.uhul)
