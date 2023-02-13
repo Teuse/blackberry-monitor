@@ -1,31 +1,21 @@
 import RPi.GPIO as GPIO
-import threading
-import time
-import random
+import mh_z19
  
-PINS = [37,38,40]  # R,G,B
+PIN_RED = 37
+PIN_GREEN = 40
+PIN_BLUE = 38
+PINS = [PIN_RED, PIN_GREEN, PIN_BLUE]  # R,G,B
  
- 
-def main():
-    try:
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(PINS, GPIO.OUT, initial=GPIO.LOW)
-        print("\nPress ^C (control-C) to exit the program.\n")
-        while True:
-            select_and_set_next_pin()
-            if all(GPIO.input(pin) == GPIO.LOW for pin in PINS):
-                select_and_set_next_pin()
-            time.sleep(0.75)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        GPIO.cleanup()
- 
- 
-def select_and_set_next_pin():
-    next_pin = PINS[random.randint(0, 2)]
-    GPIO.output(next_pin, not GPIO.input(next_pin))
- 
- 
-if __name__ == '__main__':
-    main()
+mhz19 = mh_z19.read_all()
+co2 = mhz19['co2']
+
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(PINS, GPIO.OUT, initial=GPIO.LOW)
+
+if co2 > 800 and co2 < 1000:
+    GPIO.output(PIN_GREEN, 1)
+elif co2 > 1000 and co2 < 1400:
+    GPIO.output(PIN_BLUE, 1)
+elif co2 > 1400:
+    GPIO.output(PIN_RED, 1)
