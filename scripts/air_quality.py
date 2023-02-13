@@ -46,16 +46,22 @@ print("UhUl = %0.2f " % mhz19['UhUl'])
 client = influxdb_client.InfluxDBClient(url=url, token=token, org=org)
 write_api = client.write_api(write_options=SYNCHRONOUS)
 
-p = influxdb_client.Point("air_quality") \
+p1 = influxdb_client.Point("air_quality") \
       .tag("location", "living room") \
-      .field("temperature", mhz19['temperature']) \
+      .tag("sonsor", "bme680") \
+      .field("temperature", bme680.temperature + bme680_temperature_offset)) \
       .field("humidity", bme680.relative_humidity)  \
       .field("pressure", bme680.pressure)  \
       .field("gas", bme680.gas)  \
       .field("altitude", bme680.altitude)  \
+write_api.write(bucket=bucket, org=org, record=p1)
+
+p2 = influxdb_client.Point("air_quality") \
+      .tag("location", "living room") \
+      .tag("sonsor", "mh-z19") \
+      .field("temp", mhz19['temperature']) \
       .field("co2", mhz19['co2'])  \
       .field("tt", mhz19['TT'])  \
       .field("ss", mhz19['SS']) \
       .field("uhul", mhz19['UhUl']) 
-
-write_api.write(bucket=bucket, org=org, record=p)
+write_api.write(bucket=bucket, org=org, record=p2)
