@@ -49,11 +49,11 @@ write_api = client.write_api(write_options=SYNCHRONOUS)
 p1 = influxdb_client.Point("air_quality") \
       .tag("location", "living room") \
       .tag("sonsor", "bme680") \
-      .field("temperature", bme680.temperature + bme680_temperature_offset)) \
-      .field("humidity", bme680.relative_humidity)  \
-      .field("pressure", bme680.pressure)  \
-      .field("gas", bme680.gas)  \
-      .field("altitude", bme680.altitude)  \
+      .field("temperature", bme680.temperature + bme680_temperature_offset) \
+      .field("humidity", bme680.relative_humidity) \
+      .field("pressure", bme680.pressure) \
+      .field("gas", bme680.gas) \
+      .field("altitude", bme680.altitude)
 write_api.write(bucket=bucket, org=org, record=p1)
 
 p2 = influxdb_client.Point("air_quality") \
